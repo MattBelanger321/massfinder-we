@@ -21,6 +21,8 @@ export interface TimeRange {
  * Represents a Catholic church with all its schedule information
  */
 export interface Church {
+  boundary_colour: any;
+  boundary: any;
   id: string; // Unique identifier (e.g., "st-john-the-baptist-amherstburg")
   name: string;
   familyOfParishes?: string; // The family of parishes this church belongs to

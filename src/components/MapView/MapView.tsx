@@ -1,7 +1,6 @@
 import { useState, useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import L from 'leaflet';
-import type { Map as LeafletMap, Marker as LeafletMarker } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl, Polygon } from 'react-leaflet';
+import { Rectangle } from "react-leaflet"; import type { Map as LeafletMap, Marker as LeafletMarker } from 'leaflet';
 import type { Church, MapFilters } from '../../types/church';
 import { ChurchPopup } from './ChurchPopup';
 import { FilterPanel } from './FilterPanel';
@@ -123,6 +122,20 @@ export const MapView = forwardRef<MapViewHandle, MapViewProps>(({ churches }, re
                 <ChurchPopup church={church} />
               </Popup>
             </Marker>
+          ))}
+
+          {filteredChurches.map((church) => (
+            church.boundary ? (
+              <Polygon
+                key={church.name}
+                positions={church.boundary} // <-- renamed from boundary
+                pathOptions={{
+                  color: church.boundary_colour ? church.boundary_colour : 'blue',
+                  weight: 2,
+                  fill: true,
+                }}
+              />
+            ) : null
           ))}
         </MapContainer>
       </div>
